@@ -2,10 +2,11 @@ const jsonwebtoken = require("jsonwebtoken")
 const Users = require('../model/modules/user')
 const SECRET = require('../utils/jwtconfig').SECRET
 const { Op } = require("sequelize");
-const { ctxInit,paramsTest } = require("../utils/index.js");
+const { ctxInit, paramsTest } = require("../utils/index.js");
 class UserController {
 
     async register(ctx, next) {
+        console.log(ctx.request)
         ctxInit(ctx);
         let { params } = ctx.ybw
         paramsTest(ctx, 'username', /[\.@a-zA-Z\d\u4e00-\u9fa5]{2,8}/)
@@ -13,20 +14,29 @@ class UserController {
         paramsTest(ctx, 'account', /[a-zA-Z0-9\.@]{6,16}/g)
         paramsTest(ctx, 'password', /[a-zA-Z0-9\.@]{6,16}/g)
         if (ctx.ybw.isParamsLegal) {
-            let res = await Users.findAll({
-                where: {
-                    [Op.or]: [
-                        { account: params.account },
-                        { username: params.username }
-                    ]
-                }
-            })
+
+            let res = await Users.findAll()
+
+            // let res = await Users.findAll({
+            //     where: {
+            //         [Op.or]: [
+            //             { account: params.account },
+            //             { username: params.username }
+            //         ]
+            //     }
+            // })
             if (res.length) {
                 ctx.body = {
                     code: 200,
                     success: false,
-                    message: '该账号或用户名已存在'
+                    message: '当前未开放注册'
                 }
+
+                // ctx.body = {
+                //     code: 200,
+                //     success: false,
+                //     message: '该账号或用户名已存在'
+                // }
             } else {
                 await Users.create({
                     username: params.username || null,
@@ -44,6 +54,7 @@ class UserController {
             }
         } else {
             ctx.body = {
+                
                 code: 200,
                 success: false,
                 message: ctx.ybw.errorMessage

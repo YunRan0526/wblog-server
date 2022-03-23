@@ -33,7 +33,7 @@ class ArticleController {
     }
 
     async getAll(ctx, next) {
-        let results = await Article.findAll(utils.pageLimit(ctx));
+        let results = await Article.findAll();
         /* get请求通过 ctx.request.query  获取请求参数*/
         ctx.body = {
             results,

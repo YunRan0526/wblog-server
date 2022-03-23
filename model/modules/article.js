@@ -14,17 +14,17 @@ const Article = sequelize.define('Article', {
     },
     //文章描述
     description: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,//不允许为null
     },
     //文章封面
     poster: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: true,//不允许为null
     },
     //文章内容
     content: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,//不允许为null
     },
     //文章撞太
