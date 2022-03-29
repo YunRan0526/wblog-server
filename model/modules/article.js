@@ -19,8 +19,8 @@ const Article = sequelize.define('Article', {
     },
     //文章封面
     poster: {
-        type: DataTypes.TEXT,
-        allowNull: true,//不允许为null
+        type: DataTypes.STRING,
+        allowNull: false,//不允许为null
     },
     //文章内容
     content: {

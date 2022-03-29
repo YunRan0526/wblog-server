@@ -54,7 +54,7 @@ class UserController {
             }
         } else {
             ctx.body = {
-                
+
                 code: 200,
                 success: false,
                 message: ctx.ybw.errorMessage
@@ -85,7 +85,7 @@ class UserController {
                             password: user[0].password,
                         },
                         SECRET,
-                        { expiresIn: '1h' } // 有效期1小时
+                        { expiresIn: '24h' } // 有效期1小时
 
                     )
                 }
