@@ -20,12 +20,12 @@ class ArticleController {
                     const ext = file.originalFilename.split('.')[1];
                     const fileName = Date.now() + '-' + file.originalFilename; // 获取上传文件扩展名
                     const filePath = path.join(__dirname, `../static/poster/${fileName}`)
-                    fs.writeFile(filePath, ext, function (err) {
-                        if (err) {
-                            throw new Error(err);
-                        }
+                    // fs.writeFile(filePath, ext, function (err) {
+                    //     if (err) {
+                    //         throw new Error(err);
+                    //     }
 
-                    });
+                    // });
                     const upStream = fs.createWriteStream(filePath); // 创建可写流
                     reader.pipe(upStream);
                     obj.src = `/static/poster/${fileName}`
@@ -40,7 +40,7 @@ class ArticleController {
         paramsTest(ctx, 'title', (p) => p.length >= 2)
         paramsTest(ctx, 'description', (p) => p.length >= 2)
         paramsTest(ctx, 'content', (p) => p.length >= 2)
-        if (ctx.ybw?.isParamsLegal) {
+        if (ctx.ybw.isParamsLegal) {
             await Article.create({
                 title: title,
                 description: description,
