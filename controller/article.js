@@ -110,7 +110,36 @@ class ArticleController {
             }
         }
     }
-
+    async getArticle(ctx, next) {
+        let params = ctx.request.query
+        console.log(params)
+        if (params.id || params.id === 0) {
+            let article = await Article.findAll({
+                where: {
+                    id: params.id
+                }
+            })
+            if (article.length) {
+                ctx.body = {
+                    code: 200,
+                    success: true,
+                    results: article
+                }
+            } else {
+                ctx.body = {
+                    code: 200,
+                    success: false,
+                    message: '文章不存在'
+                }
+            }
+        } else {
+            ctx.body = {
+                code: 200,
+                success: false,
+                message: 'id必传'
+            }
+        }
+    }
 }
 
 module.exports = ArticleController
