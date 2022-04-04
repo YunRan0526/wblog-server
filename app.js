@@ -20,7 +20,7 @@ onerror(app);
 // 中间件对token进行验证
 // koa-jwt 会自动解析token 并且将内容解析内容存放在 ctx.state.user
 app.use(koajwt({ secret: SECRET }).unless({
-  path: [/^\/user\/login/, /^\/user\/register/, /^\/article\/getAll/, /^\/static/]  //排除login接口
+  path: [/^\/user\/login/, /^\/user\/register/, /^\/article\/getAll/, /^\/article\/getArticle/, /^\/static/]  //排除login接口
 }));
 
 //处理post请求的参数

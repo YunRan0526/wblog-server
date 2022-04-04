@@ -5,6 +5,7 @@ const utils = require('../utils/index.js')
 const fs = require('fs')
 const path = require('path')
 const { ctxInit, paramsTest } = require("../utils/index.js");
+const { toMd5 } = require("../utils/index.js")
 class ArticleController {
     async add(ctx, next) {
         let form = new multiparty.Form();
@@ -17,9 +18,10 @@ class ArticleController {
                     })
                     const file = files.poster[0]; // 获取上传文件
                     const reader = fs.createReadStream(file.path); // 创建可读流
-                    const ext = file.originalFilename.split('.')[1];
-                    const fileName = Date.now() + '-' + file.originalFilename; // 获取上传文件扩展名
-                    const filePath = path.join(__dirname, `../static/poster/${fileName}`)
+                    const arr = file.originalFilename.split('.')
+                    const ext = arr[arr.length - 1];
+                    const fileName = toMd5(`${Date.now()}-${file.originalFilename.split('.')[0]}`); // 获取上传文件扩展名
+                    const filePath = path.join(__dirname, `../static/poster/${fileName}.${ext}`)
                     // fs.writeFile(filePath, ext, function (err) {
                     //     if (err) {
                     //         throw new Error(err);
@@ -28,7 +30,7 @@ class ArticleController {
                     // });
                     const upStream = fs.createWriteStream(filePath); // 创建可写流
                     reader.pipe(upStream);
-                    obj.src = `/static/poster/${fileName}`
+                    obj.src = `/static/poster/${fileName}.${ext}`
                     resolve(obj)
                 });
             })

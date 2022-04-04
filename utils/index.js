@@ -1,4 +1,4 @@
-
+const md5 = require('./md5.js')
 module.exports = {
     pageLimit: (ctx) => {
         return {
@@ -63,5 +63,8 @@ module.exports = {
             temp = `${myYear}-${myMonth}-${myDay} ${myHours}:${myMinutes}`
         }
         return temp
+    },
+    toMd5: (str) => {
+        return md5.MD5(str)
     }
 }
